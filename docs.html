@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partage de documents</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    .cursor {
+      position: absolute;
+      width: 10px;
+      height: 20px;
+      background-color: #007bff;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Gestion de crise cyber</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">Tableau de bord</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="incidentgestion.html">Gestion des incidents</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chat.html">Chat en direct</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="partageinfo.html">Partage d'informations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="analyse.html">Analyse et amélioration</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <div class="text-right mb-3">
+              <a class="btn btn-secondary btn-sm" href="index.html">
+                <i class="fas fa-arrow-left"></i> Retour
+              </a>
+            </div>
+            <h3 class="mb-0">Partage de documents</h3>
+          </div>
+          <div class="card-body">
+            <p class="lead">Accédez et contribuez aux documents partagés en temps réel pour votre application de gestion de crise cyber.</p>
+
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Rechercher un document" aria-label="Rechercher un document">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">Rechercher</button>
+              </div>
+            </div>
+
+            <div class="list-group" id="document-list">
+              <!-- Les documents seront affichés ici -->
+            </div>
+
+            <div class="text-center mt-4">
+              <button class="btn btn-primary" data-toggle="modal" data-target="#addDocumentModal">Ajouter un document</button>
+            </div>
+
+            <div class="mt-4">
+              <h4>Chat en temps réel</h4>
+              <div class="chat-container">
+                <div class="chat-messages">
+                  <!-- Messages du chat seront affichés ici -->
+                </div>
+                <div class="chat-input-container">
+                  <input type="text" class="form-control chat-input" placeholder="Entrez votre message">
+                  <button class="btn btn-primary chat-send">Envoyer</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <h4>Historique des modifications</h4>
+              <div class="revision-container">
+                <!-- Historique des modifications sera affiché ici -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer mt-5 py-3 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <p class="mb-0">&copy; 2024 Gestion de crise cyber. Tous droits réservés.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal pour ajouter un document -->
+  <div class="modal fade" id="addDocumentModal" tabindex="-1" role="dialog" aria-labelledby="addDocumentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addDocumentModalLabel">Ajouter un document</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="addDocumentForm">
+            <div class="form-group">
+              <label for="documentTitle">Titre du document</label>
+              <input type="text" class="form-control" id="documentTitle" placeholder="Entrez le titre du document" required>
+            </div>
+            <div class="form-group">
+              <label for="documentDescription">Description du document</label>
+              <textarea class="form-control" id="documentDescription" rows="3" placeholder="Entrez la description du document" required></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+          <button type="button" class="btn btn-primary" id="saveDocument">Enregistrer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+    // Connexion au serveur Socket.IO
+    const socket = io();
+
+    // Gestion des curseurs des autres utilisateurs
+    socket.on('cursor-update', (data) => {
+      $('.cursor').remove();
+      data.forEach((cursor) => {
+        $('body').append(`<div class="cursor" style="top: ${cursor.y}px; left: ${cursor.x}px; background-color: ${cursor.color};"></div>`);
+      });
+    });
+
+    // Gestion du chat en temps réel
+    $('.chat-send').click(() => {
+      const message = $('.chat-input').val();
+      socket.emit('chat-message', message);
+      $('.chat-input').val('');
+    });
+
+    socket.on('chat-message', (data) => {
+      $('.chat-messages').append(`<div><strong>${data.user}:</strong> ${data.message}</div>`);
+    });
+
+    // Gestion de l'historique des modifications
+    socket.on('revision-update', (data) => {
+      $('.revision-container').empty();
+      data.forEach((revision) => {
+        $('.revision-container').append(`<div>Modifié par ${revision.user} à ${revision.timestamp}</div>`);
+      });
+    });
+
+    // Gestion des documents
+    let documents = [];
+
+    function renderDocuments() {
+      $('#document-list').empty();
+      documents.forEach((document) => {
+        $('#document-list').append(`
+          <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">${document.title}</h5>
+              <small>Modifié il y a ${document.timestamp} min</small>
+            </div>
+            <p class="mb-1">${document.description}</p>
+            <small>Partagé par ${document.user}</small>
+            <div class="text-right">
+              <button class="btn btn-danger btn-sm delete-document" data-id="${document.id}">Supprimer</button>
+            </div>
+          </a>
+        `);
+      });
+
+      $('.delete-document').click((event) => {
+        const documentId = $(event.target).data('id');
+        deleteDocument(documentId);
+      });
+    }
+
+    function addDocument(document) {
+      documents.push(document);
+      renderDocuments();
+      socket.emit('document-added', document);
+    }
+
+    function deleteDocument(documentId) {
+      documents = documents.filter((doc) => doc.id !== documentId);
+      renderDocuments();
+      socket.emit('document-deleted', documentId);
+    }
+
+    $('#saveDocument').click(() => {
+      const title = $('#documentTitle').val();
+      const description = $('#documentDescription').val();
+      const document = {
+        id: Date.now(),
+        title,
+        description,
+        user: 'Utilisateur',
+        timestamp: 0,
+      };
+      addDocument(document);
+      $('#addDocumentModal').modal('hide');
+      $('#documentTitle').val('');
+      $('#documentDescription').val('');
+    });
+
+    // Charger les documents existants (à remplacer par une requête au serveur)
+    addDocument({
+      id: 1,
+      title: 'Document de crise 1',
+      description: 'Description du document de crise 1.',
+      user: 'John Doe',
+      timestamp: 5,
+    });
+    addDocument({
+      id: 2,
+      title: 'Document de crise 2',
+      description: 'Description du document de crise 2.',
+      user: 'Jane Smith',
+      timestamp: 10,
+    });
+  </script>
+</body>
+</html>

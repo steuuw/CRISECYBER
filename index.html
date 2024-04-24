@@ -3,9 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestion de crise cyber</title>
+  <title>Gestion de crise cyber - SANOFI</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .navbar-brand {
+      font-weight: 700;
+    }
+    .hero {
+      background-image: url('assets/hero-background.jpg'); /* Ajout de l'image en arrière-plan */
+      background-size: cover;
+      background-position: center;
+      min-height: 700px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4); /* Ajout d'un filtre de couleur sombre */
+      z-index: 1;
+    }
+    .hero .container {
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .hero p {
+      font-size: 1.75rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    .features .card {
+      border: none;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease-in-out;
+    }
+    .features .card:hover {
+      transform: translateY(-5px);
+    }
+    .features .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .features .card-text {
+      font-size: 1.1rem;
+    }
+    .cta {
+      background-color: #f8f9fa;
+      padding: 4rem 0;
+    }
+    .cta h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .cta p {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .footer {
+      background-color: #0d6efd;
+      color: #fff;
+      padding: 2rem 0;
+    }
+    .footer p {
+      margin-bottom: 0;
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -36,50 +116,60 @@
   </header>
 
   <main>
-    <section class="hero py-5">
+    <section class="hero py-5 text-white">
       <div class="container">
-        <h1 class="display-4 text-center mb-4">Bienvenue sur notre plateforme de gestion de crise cyber</h1>
-        <p class="lead text-center mb-5">Restez en contrôle et réagissez rapidement face aux incidents de sécurité.</p>
-        <div class="text-center">
-          <a href="#" class="btn btn-primary btn-lg">Commencer</a>
+        <div class="row align-items-center">
+          <div class="col-md-8 offset-md-2 text-center">
+            <h1 class="display-3 mb-4">Gestionnaire de crise cyber - SANOFI</h1>
+            <p class="lead mb-5">Restez en contrôle et réagissez rapidement face aux incidents de sécurité.</p>
+            <a href="detect.html" class="btn btn-light btn-lg">Commencer</a>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="features py-5 bg-light">
-        <div class="container">
-          <h2 class="text-center mb-4">Principales fonctionnalités</h2>
-          <div class="row">
-            <div class="col-md-4 mb-4">
-              <a href="dashboard.html" target="_blank" rel="noopener noreferrer" class="card h-100 text-decoration-none text-dark">
-                <div class="card-body">
-                  <h3 class="card-title">Tableau de bord</h3>
-                  <p class="card-text">Visualisez en temps réel les incidents de cybersécurité et leurs impacts.</p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 mb-4">
-              <a href="incidentgestion.html" target="_blank" rel="noopener noreferrer" class="card h-100 text-decoration-none text-dark">
-                <div class="card-body">
-                  <h3 class="card-title">Gestion des incidents</h3>
-                  <p class="card-text">Suivez et résolvez les incidents de manière standardisée.</p>
-                </div>
-              </a>
-            </div>
-            <div class="col-md-4 mb-4">
-              <a href="#" class="card h-100 text-decoration-none text-dark">
-                <div class="card-body">
-                  <h3 class="card-title">Partage d'informations</h3>
-                  <p class="card-text">Accédez à une bibliothèque de ressources et collaborez en temps réel.</p>
-                </div>
-              </a>
-            </div>
+      <div class="container">
+        <h2 class="text-center mb-4">Principales fonctionnalités</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <a href="dashboard.html" target="_blank" rel="noopener noreferrer" class="card h-100 text-decoration-none text-dark">
+              <div class="card-body">
+                <h3 class="card-title">Tableau de bord</h3>
+                <p class="card-text">Visualisez en temps réel les incidents de cybersécurité et leurs impacts.</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 mb-4">
+            <a href="incidentgestion.html" target="_blank" rel="noopener noreferrer" class="card h-100 text-decoration-none text-dark">
+              <div class="card-body">
+                <h3 class="card-title">Gestion des incidents</h3>
+                <p class="card-text">Suivez et résolvez les incidents de manière standardisée.</p>
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 mb-4">
+            <a href="partageinfo.html" target="_blank" rel="noopener noreferrer" class="card h-100 text-decoration-none text-dark">
+              <div class="card-body">
+                <h3 class="card-title">Partage d'informations</h3>
+                <p class="card-text">Accédez à une bibliothèque de ressources et collaborez en temps réel.</p>
+              </div>
+            </a>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container text-center">
+        <h2>Prêt à gérer vos crises cyber ?</h2>
+        <p>Commencez dès maintenant à utiliser notre outil de gestion de crise cyber.</p>
+        <a href="detect.html" class="btn btn-primary btn-lg">Commencer</a>
+      </div>
     </section>
   </main>
 
-  <footer class="bg-primary text-white py-3">
+  <footer class="footer">
     <div class="container text-center">
       <p>&copy; 2024 Gestion de crise cyber. Tous droits réservés.</p>
     </div>

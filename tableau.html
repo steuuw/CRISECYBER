@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau blanc virtuel</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    #whiteboard {
+      width: 100%;
+      height: 600px;
+      border: 1px solid #ccc;
+      background-color: white;
+    }
+
+    .color-picker {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin: 5px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .color-picker.active {
+      border-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Gestion de crise cyber</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">Tableau de bord</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="incidentgestion.html">Gestion des incidents</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="chat.html">Chat en direct</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="partageinfo.html">Partage d'informations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="tableau-blanc.html">Tableau blanc</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="analyse.html">Analyse et amélioration</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <div class="text-right mb-3">
+              <a class="btn btn-secondary btn-sm" href="partageinfo.html">
+                <i class="fas fa-arrow-left"></i> Retour
+              </a>
+            </div>
+            <h3 class="mb-0">Tableau blanc virtuel</h3>
+          </div>
+          <div class="card-body">
+            <p class="lead">Collaborez en direct sur un tableau blanc partagé pour la gestion d'une crise cyber.</p>
+
+            <canvas id="whiteboard"></canvas>
+
+            <div class="text-center mt-4">
+              <div class="btn-group">
+                <div class="color-picker active" style="background-color: #000000;" data-color="#000000"></div>
+                <div class="color-picker" style="background-color: #FF0000;" data-color="#FF0000"></div>
+                <div class="color-picker" style="background-color: #00FF00;" data-color="#00FF00"></div>
+                <div class="color-picker" style="background-color: #0000FF;" data-color="#0000FF"></div>
+                <div class="color-picker" style="background-color: #FFFF00;" data-color="#FFFF00"></div>
+                <div class="color-picker" style="background-color: #00FFFF;" data-color="#00FFFF"></div>
+                <div class="color-picker" style="background-color: #FF00FF;" data-color="#FF00FF"></div>
+              </div>
+              <button class="btn btn-danger mt-3" id="clear-whiteboard">Effacer le tableau</button>
+              <button class="btn btn-secondary mt-3 ml-2" id="increase-brush">Augmenter la taille du pinceau</button>
+              <button class="btn btn-secondary mt-3 ml-2" id="decrease-brush">Réduire la taille du pinceau</button>
+              <button class="btn btn-success mt-3 ml-2" id="save-drawing">Sauvegarder le dessin</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer mt-5 py-3 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <p class="mb-0">&copy; 2024 Gestion de crise cyber. Tous droits réservés.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/fabric@5.3.0/dist/fabric.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Initialisation du tableau blanc
+      const canvas = new fabric.Canvas('whiteboard', {
+        isDrawingMode: true,
+        freeDrawingBrush: {
+          width: 5,
+          color: '#000000',
+        },
+      });
+
+      // Gestion des couleurs du pinceau
+      $('.color-picker').click(function(event) {
+        $('.color-picker').removeClass('active');
+        $(this).addClass('active');
+        const color = $(this).data('color');
+        canvas.freeDrawingBrush.color = color;
+      });
+
+      // Gestion de l'effacement du tableau
+      $('#clear-whiteboard').click(function() {
+        canvas.clear();
+      });
+
+      // Augmenter la taille du pinceau
+      $('#increase-brush').click(function() {
+        canvas.freeDrawingBrush.width += 1;
+      });
+
+      // Réduire la taille du pinceau
+      $('#decrease-brush').click(function() {
+        if (canvas.freeDrawingBrush.width > 1) {
+          canvas.freeDrawingBrush.width -= 1;
+        }
+      });
+
+      // Sauvegarder le dessin
+      $('#save-drawing').click(function() {
+        canvas.requestRenderAll();
+        const dataURL = canvas.toDataURL({
+          format: 'png',
+          quality: 0.8,
+        });
+        const link = document.createElement('a');
+        link.href = dataURL;
+        link.download = 'dessin.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    });
+  </script>
+</body>
+</html>

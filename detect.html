@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détectez votre incident de sécurité</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    .hero {
+      background-image: url('hero-background.jpg');
+      background-size: cover;
+      background-position: center;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+    .hero .container {
+      position: relative;
+      z-index: 2;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .hero p {
+      font-size: 1.5rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+    .quiz {
+      padding: 4rem 0;
+    }
+    .quiz h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    .quiz .card {
+      border: none;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease-in-out;
+      cursor: pointer;
+    }
+    .quiz .card:hover {
+      transform: translateY(-5px);
+    }
+    .quiz .card-body {
+      padding: 2rem;
+    }
+    .quiz .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    .quiz .card-text {
+      font-size: 1.1rem;
+    }
+    .result {
+      padding: 4rem 0;
+      background-color: #f8f9fa;
+    }
+    .result h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+    }
+    .result p {
+      font-size: 1.25rem;
+    }
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+    .loading-spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">Gestion de crise cyber</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="dashboard.html">Tableau de bord</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="incidentgestion.html">Gestion des incidents</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="partageinfo.html">Partage d'informations</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="analyse.html">Analyse et amélioration</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero py-5 text-white">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-8 offset-md-2 text-center">
+            <h1 class="display-3 mb-4">Détectez votre incident de sécurité</h1>
+            <p class="lead mb-5">Répondez aux questions suivantes pour identifier le type d'incident auquel vous faites face.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quiz">
+      <div class="container">
+        <h2>Questionnaire</h2>
+        <div id="quiz-container">
+          <!-- Les questions du quiz seront affichées ici -->
+        </div>
+        <button id="next-question" class="btn btn-primary btn-lg mt-4">Suivant</button>
+      </div>
+    </section>
+
+    <section class="result">
+      <div class="container">
+        <h2>Résultat</h2>
+        <div id="result-content">
+          <!-- Le résultat du quiz sera affiché ici -->
+        </div>
+        <button id="add-to-manager" class="btn btn-primary btn-lg mt-4">Ajouter à la gestion des incidents</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer bg-primary text-white py-3">
+    <div class="container text-center">
+      <p>&copy; 2024 Gestion de crise cyber. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div class="modal fade" id="incident-added-modal" tabindex="-1" aria-labelledby="incident-added-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="incident-added-modal-label">Incident ajouté</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body">
+          <p>L'incident a été ajouté avec succès au gestionnaire d'incidents.</p>
+        </div>
+        <div class="modal-footer">
+          <a href="incidentgestion.html" class="btn btn-primary">Aller au gestionnaire</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const quizContainer = document.getElementById('quiz-container');
+    const nextQuestionButton = document.getElementById('next-question');
+    const resultContent = document.getElementById('result-content');
+    const addToManagerButton = document.getElementById('add-to-manager');
+    const loadingOverlay = document.querySelector('.loading-overlay');
+    const incidentAddedModal = document.getElementById('incident-added-modal');
+
+    const questions = [
+      {
+        question: 'Avez-vous constaté une indisponibilité ou un ralentissement anormal de vos systèmes ou services ?',
+        options: ['Oui', 'Non']
+      },
+      {
+        question: 'Avez-vous reçu des messages ou des demandes de rançon liés à un chiffrement de vos fichiers ?',
+        options: ['Oui', 'Non']
+      },
+      {
+        question: 'Avez-vous détecté des activités suspectes sur vos comptes ou votre réseau, comme des connexions inhabituelles ?',
+        options: ['Oui', 'Non']
+      },
+      {
+        question: 'Avez-vous constaté une fuite ou un vol de données sensibles ?',
+        options: ['Oui', 'Non']
+      },
+      {
+        question: 'Avez-vous reçu des messages ou des emails suspects vous demandant de cliquer sur un lien ou d\'ouvrir une pièce jointe ?',
+        options: ['Oui', 'Non']
+      },
+      {
+        question: 'Avez-vous détecté la présence de logiciels malveillants (virus, vers, etc.) sur vos systèmes ?',
+        options: ['Oui', 'Non']
+      },
+      {
+        question: 'Avez-vous constaté une usurpation d\'identité ou des activités suspectes sur vos comptes en ligne ?',
+        options: ['Oui', 'Non']
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let answers = [];
+    let detectedIncident = null;
+
+    function displayQuestion(index) {
+      quizContainer.innerHTML = '';
+      const question = questions[index];
+      const card = document.createElement('div');
+      card.classList.add('card', 'mb-4');
+      card.innerHTML = `
+        <div class="card-body">
+          <h3 class="card-title">${question.question}</h3>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="q${index}" value="${question.options[0]}" required>
+            <label class="form-check-label">${question.options[0]}</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="q${index}" value="${question.options[1]}" required>
+            <label class="form-check-label">${question.options[1]}</label>
+          </div>
+        </div>
+      `;
+      quizContainer.appendChild(card);
+
+      if (currentQuestionIndex === questions.length - 1) {
+        nextQuestionButton.style.display = 'none';
+        quizContainer.addEventListener('change', submitQuiz);
+      } else {
+        nextQuestionButton.style.display = 'block';
+      }
+    }
+
+    function displayNextQuestion() {
+      const selectedOption = document.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+      if (selectedOption) {
+        answers.push(selectedOption.value);
+        currentQuestionIndex++;
+        displayQuestion(currentQuestionIndex);
+      }
+    }
+
+    function submitQuiz() {
+      const selectedOption = document.querySelector(`input[name="q${currentQuestionIndex}"]:checked`);
+      if (selectedOption) {
+        answers.push(selectedOption.value);
+      }
+
+      let resultMessage;
+      if (answers.includes('Oui') && answers.includes('Oui', 0)) {
+        detectedIncident = 'Attaque par déni de service (DDoS)';
+        resultMessage = '<h3>Attaque par déni de service (DDoS)</h3><p>Vos réponses indiquent que vous avez été victime d\'une attaque par déni de service (DDoS) rendant vos systèmes ou services indisponibles. Suivez les instructions pour gérer ce type d\'incident.</p>';
+      } else if (answers.includes('Oui') && answers.includes('Oui', 1)) {
+        detectedIncident = 'Attaque par ransomware';
+        resultMessage = '<h3>Attaque par ransomware</h3><p>Vos réponses indiquent que vous avez été victime d\'une attaque par ransomware qui a chiffré vos fichiers. Suivez les instructions pour gérer ce type d\'incident.</p>';
+      } else if (answers.includes('Oui') && answers.includes('Oui', 2)) {
+        detectedIncident = 'Activités suspectes sur le réseau';
+        resultMessage = '<h3>Activités suspectes sur le réseau</h3><p>Vos réponses suggèrent la présence d\'activités suspectes sur votre réseau, comme des connexions inhabituelles. Suivez les instructions pour gérer ce type d\'incident.</p>';
+      } else if (answers.includes('Oui') && answers.includes('Oui', 3)) {
+        detectedIncident = 'Fuite ou vol de données';
+        resultMessage = '<h3>Fuite ou vol de données</h3><p>Vos réponses indiquent que vous avez constaté une fuite ou un vol de données sensibles. Suivez les instructions pour gérer ce type d\'incident.</p>';
+      } else if (answers.includes('Oui') && answers.includes('Oui', 4)) {
+        detectedIncident = 'Attaque de phishing';
+        resultMessage = '<h3>Attaque de phishing</h3><p>Vos réponses suggèrent que vous avez été victime d\'une attaque de phishing visant à vous faire divulguer des informations sensibles ou à installer un malware. Suivez les instructions pour gérer ce type d\'incident.</p>';
+      } else if (answers.includes('Oui') && answers.includes('Oui', 5)) {
+        detectedIncident = 'Infection par un logiciel malveillant';
+        resultMessage = '<h3>Infection par un logiciel malveillant</h3><p>Vos réponses indiquent la présence de logiciels malveillants sur vos systèmes. Suivez les instructions pour gérer ce type d\'incident.</p>';
+      } else if (answers.includes('Oui') && answers.includes('Oui', 6)) {
+        detectedIncident = 'Usurpation d\'identité';
+        resultMessage = '<h3>Usurpation d\'identité</h3><p>Vos réponses indiquent une usurpation d\'identité ou des activités suspectes sur vos comptes en ligne. Suivez les instructions pour gérer ce type d\'incident.</p>';
+      } else {
+        detectedIncident = null;
+        resultMessage = '<h3>Incident non identifié</h3><p>D\'après vos réponses, il est difficile de déterminer avec précision le type d\'incident. Veuillez contacter notre équipe d\'assistance pour une analyse approfondie.</p>';
+      }
+
+      resultContent.innerHTML = resultMessage;
+
+      if (detectedIncident) {
+        addToManagerButton.style.display = 'block';
+        addToManagerButton.addEventListener('click', () => addIncidentToManager());
+      } else {
+        addToManagerButton.style.display = 'none';
+      }
+    }
+
+    function addIncidentToManager() {
+      loadingOverlay.style.display = 'flex';
+
+      // Logique pour ajouter l'incident détecté au gestionnaire d'incidents
+      console.log(`Ajout de l'incident "${detectedIncident}" au gestionnaire d'incidents.`);
+
+      // Afficher la modal après un délai de 2 secondes pour simuler le temps de traitement
+      setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+        const incidentAddedModal = new bootstrap.Modal(document.getElementById('incident-added-modal'));
+        incidentAddedModal.show();
+      }, 2000);
+    }
+
+    displayQuestion(currentQuestionIndex);
+    nextQuestionButton.addEventListener('click', displayNextQuestion);
+  </script>
+</body>
+</html>

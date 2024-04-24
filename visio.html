@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réunions en ligne pour la gestion de crise cyber</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container-fluid {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #video-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f5f5f5;
+    }
+
+    #video-container video {
+      max-width: 100%;
+      max-height: 100%;
+    }
+
+    #controls {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #participants-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #participants-list li {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    #participants-list li.waiting {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+          <a class="navbar-brand" href="index.html">Gestion de crise cyber</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard.html">Tableau de bord</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="incidentgestion.html">Gestion des incidents</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="visioconference.html">Visioconférence</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="partageinfo.html">Partage d'informations</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="tableau-blanc.html">Tableau blanc</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="analyse.html">Analyse et amélioration</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div class="card shadow-sm flex-grow-1">
+      <div class="card-header bg-primary text-white">
+        <div class="text-right mb-3">
+          <a class="btn btn-secondary btn-sm" href="index.html">
+            <i class="fas fa-arrow-left"></i> Retour
+          </a>
+        </div>
+        <h3 class="mb-0">Réunions en ligne pour la gestion de crise cyber</h3>
+      </div>
+      <div class="card-body">
+        <p class="lead">Organisez des réunions en ligne avec les différents acteurs pour la gestion de crise cyber.</p>
+
+        <div id="video-container">
+          <video id="local-video" autoplay></video>
+          <video id="remote-video-1" autoplay></video>
+          <video id="remote-video-2" autoplay></video>
+        </div>
+
+        <div id="controls">
+          <button class="btn btn-primary" id="start-call">
+            <i class="fas fa-video"></i> Démarrer la réunion
+          </button>
+          <button class="btn btn-danger" id="end-call">
+            <i class="fas fa-phone-slash"></i> Terminer la réunion
+          </button>
+          <button class="btn btn-secondary" id="share-screen">
+            <i class="fas fa-desktop"></i> Partager l'écran
+          </button>
+        </div>
+
+        <div class="mt-4">
+          <h4>Participants</h4>
+          <ul id="participants-list">
+            <li>
+              <strong>John Doe</strong> (Responsable de la sécurité informatique)
+            </li>
+            <li>
+              <strong>Jane Smith</strong> (Directrice des opérations)
+            </li>
+            <li class="waiting">
+              <strong>Bob Johnson</strong> (Responsable des ressources humaines) - En attente
+            </li>
+            <li class="waiting">
+              <strong>Alice Williams</strong> (Responsable de la communication) - En attente
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer mt-5 py-3 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <p class="mb-0">&copy; 2024 Gestion de crise cyber. Tous droits réservés.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.3.2/peerjs.min.js"></script>
+  <script>
+    // Initialisation de la connexion peer-to-peer
+    const peer = new Peer();
+
+    // Gestion du démarrage de la réunion
+    $('#start-call').click(() => {
+      navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+        .then((stream) => {
+          const localVideo = document.getElementById('local-video');
+          localVideo.srcObject = stream;
+          localVideo.play();
+
+          const call = peer.call('remote-peer', stream);
+          call.on('stream', (remoteStream) => {
+            const remoteVideo = document.createElement('video');
+            remoteVideo.srcObject = remoteStream;
+            remoteVideo.autoplay = true;
+            $('#video-container').append(remoteVideo);
+          });
+        })
+        .catch((error) => {
+          console.error('Erreur lors de l\'accès à la caméra :', error);
+        });
+    });
+
+    // Gestion de la fin de la réunion
+    $('#end-call').click(() => {
+      $('#video-container').empty();
+    });
+
+    // Gestion du partage d'écran
+    $('#share-screen').click(() => {
+      navigator.mediaDevices.getDisplayMedia({ video: true })
+        .then((stream) => {
+          const localVideo = document.getElementById('local-video');
+          localVideo.srcObject = stream;
+          localVideo.play();
+
+          const call = peer.call('remote-peer', stream);
+          call.on('stream', (remoteStream) => {
+            const remoteVideo = document.createElement('video');
+            remoteVideo.srcObject = remoteStream;
+            remoteVideo.autoplay = true;
+            $('#video-container').append(remoteVideo);
+          });
+        })
+        .catch((error) => {
+          console.error('Erreur lors du partage d\'écran :', error);
+        });
+    });
+  </script>
+</body>
+</html>

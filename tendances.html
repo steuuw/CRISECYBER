@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tendances des incidents de cybersécurité</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+          <div class="container">
+            <a class="navbar-brand" href="index.html">Gestion de crise cyber</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="dashboard.html">Tableau de bord</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="incidentgestion.html">Gestion des incidents</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="chat.html">Chat en direct</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="partageinfo.html">Partage d'informations</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="analyse.html">Analyse et amélioration</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+  <div class="container my-5">
+    <h1 class="text-center mb-4">Tendances des incidents de cybersécurité</h1>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">Incidents par type</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="incidentTypeChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">Incidents par statut</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="incidentStatusChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h3 class="card-title mb-0">Incidents par période</h3>
+          </div>
+          <div class="card-body">
+            <canvas id="incidentTimelineChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer mt-5 py-3 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col text-center">
+          <p class="mb-0">&copy; 2024 Gestion de crise cyber. Tous droits réservés.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpIdKSbTNOzgEtdFahWFwNTcD/KcnpkVl38XAcpVOVVj0lTNo" crossorigin="anonymous"></script>
+  <script>
+    // Données de test pour les graphiques
+    const incidentTypeData = {
+      labels: ['Intrusion', 'Déni de service', 'Fuite de données', 'Autre'],
+      datasets: [{
+        data: [25, 15, 20, 10],
+        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#6c757d']
+      }]
+    };
+
+    const incidentStatusData = {
+      labels: ['En cours', 'Résolu', 'Non résolu'],
+      datasets: [{
+        data: [30, 40, 15],
+        backgroundColor: ['#ffc107', '#28a745', '#dc3545']
+      }]
+    };
+
+    const incidentTimelineData = {
+      labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+      datasets: [{
+        label: 'Incidents',
+        data: [8, 12, 15, 10, 18, 14],
+        backgroundColor: '#007bff'
+      }]
+    };
+
+    // Création des graphiques
+    const incidentTypeChart = new Chart(document.getElementById('incidentTypeChart'), {
+      type: 'doughnut',
+      data: incidentTypeData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+
+    const incidentStatusChart = new Chart(document.getElementById('incidentStatusChart'), {
+      type: 'pie',
+      data: incidentStatusData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
+
+    const incidentTimelineChart = new Chart(document.getElementById('incidentTimelineChart'), {
+      type: 'bar',
+      data: incidentTimelineData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true,
+            precision: 0
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>
