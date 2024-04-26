@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartographie du réseau Sanofi</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <div class="container">
+        <a class="navbar-brand" href="#">Sanofi</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Cartographie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="py-5">
+      <div class="container">
+        <h1 class="mb-4">Cartographie du réseau Sanofi</h1>
+        <p class="lead">Voici la représentation schématique détaillée de l'infrastructure réseau de l'entreprise Sanofi.</p>
+      </div>
+    </section>
+
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <img src="assets/cartographie.png" alt="Cartographie du réseau" class="img-fluid">
+            <iframe src="https://miro.com/app/board/uXjVKPYgMeU=/"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-5">
+      <div class="container">
+        <h2 class="mb-4">Légende</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <h3>Éléments du réseau</h3>
+            <ul>
+              <li>SIEM : 192.168.1.100</li>
+              <li>Appareils : 192.168.1.101 - 192.168.1.200</li>
+              <li>Routeur : 192.168.1.1</li>
+              <li>Switchs : 192.168.1.201 - 192.168.1.210</li>
+              <li>Imprimantes : 192.168.1.211 - 192.168.1.220</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h3>Liens</h3>
+            <ul>
+              <li>Connexion filaire</li>
+              <li>Connexion sans fil</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-primary text-white py-4">
+    <div class="container text-center">
+      <p>&copy; 2023 Sanofi. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
